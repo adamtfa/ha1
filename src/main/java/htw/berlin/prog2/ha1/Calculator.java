@@ -26,14 +26,27 @@ public class Calculator {
      * drücken kann muss der Wert positiv und einstellig sein und zwischen 0 und 9 liegen.
      * Führt in jedem Fall dazu, dass die gerade gedrückte Ziffer auf dem Bildschirm angezeigt
      * oder rechts an die zuvor gedrückte Ziffer angehängt angezeigt wird.
+     * Modifiziert, sodass nun auch die pressDotKey Taste vor einer Zahl gedrückt werden kann,
+     * um daraus "0.Zahl" zu machen.
      * @param digit Die Ziffer, deren Taste gedrückt wurde
      */
     public void pressDigitKey(int digit) {
         if(digit > 9 || digit < 0) throw new IllegalArgumentException();
 
-        if(screen.equals("0") || latestValue == Double.parseDouble(screen)) screen = "";
+        if(screen.equals("0") || (isCompleteNumber(screen) && latestValue == Double.parseDouble(screen))) screen = "";
 
         screen = screen + digit;
+    }
+
+    /**
+     * Hilfsmethode, die festlegt, was genau als "komplette/fertige Zahl" gilt, damit der Screen 
+     * nicht fälschlicherweise bei einer Eingabe von der Punkt-Taste zurückgesetzt wird
+     * und somit eine Eingabe von Punkt-Taste -> 5 -> 0.5 berechnet werden kann.
+     * @param screen Der Output des Screens
+     * @return komplette Zahl, darf nicht mit "." enden und auch nicht leer sein.
+     */
+    private boolean isCompleteNumber(String screen) {
+        return !screen.endsWith(".") && !screen.isEmpty();
     }
 
     /**

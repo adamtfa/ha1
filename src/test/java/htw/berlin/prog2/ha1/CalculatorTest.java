@@ -116,8 +116,25 @@ class CalculatorTest {
         calc.pressDigitKey(9);
         calc.pressUnaryOperationKey("√");
 
-        String expected = "3"; //1. roter Test, anstatt von 3 wird 3.0 ausgegeben
+        String expected = "3"; //1. roter Test, anstatt von 3 wird 3.0 ausgegeben.
         String actual = calc.readScreen();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("should handle and display decimal input correctly")
+    void testDecimalInputHandling() {
+        Calculator calc = new Calculator();
+
+        calc.pressDotKey();
+        calc.pressDigitKey(5);
+        calc.pressBinaryOperationKey("+");
+        calc.pressDigitKey(1);
+        calc.pressEqualsKey();
+
+        String expected = "1.5"; //2. roter Test, sollte z. B. mit der Zahl "5" 0.5 anstatt 5 anzeigen, wenn zuerst die Punkt-Taste und danach eine Zahl (in dem Fall 5) gedrückt wird. 
+        String actual = calc.readScreen(); //Führt zu einem falschen Ergebnis.
 
         assertEquals(expected, actual);
     }
