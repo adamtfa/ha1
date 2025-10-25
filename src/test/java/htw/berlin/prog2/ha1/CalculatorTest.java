@@ -107,5 +107,19 @@ class CalculatorTest {
 
         assertEquals(expected, actual);
     }
+
+    @Test
+    @DisplayName("should display result when calculating the square root of nine")
+    void testSquareRootOfNine() {
+        Calculator calc = new Calculator();
+
+        calc.pressDigitKey(9);
+        calc.pressUnaryOperationKey("√");
+
+        String expected = "3"; //1. roter Test, anstatt von 3 wird 3.0 ausgegeben
+        String actual = calc.readScreen();
+
+        assertEquals(expected, actual);
+    }
 }
 

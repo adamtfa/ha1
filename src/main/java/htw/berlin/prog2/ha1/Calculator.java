@@ -55,11 +55,11 @@ public class Calculator {
      * Addition, Substraktion, Division, oder Multiplikation, welche zwei Operanden benötigen.
      * Beim ersten Drücken der Taste wird der Bildschirminhalt nicht verändert, sondern nur der
      * Rechner in den passenden Operationsmodus versetzt.
-     * Beim zweiten Drücken nach Eingabe einer weiteren Zahl wird direkt des aktuelle Zwischenergebnis
+     * Beim zweiten Drücken nach Eingabe einer weiteren Zahl wird direkt das aktuelle Zwischenergebnis
      * auf dem Bildschirm angezeigt. Falls hierbei eine Division durch Null auftritt, wird "Error" angezeigt.
      * @param operation "+" für Addition, "-" für Substraktion, "x" für Multiplikation, "/" für Division
      */
-    public void pressBinaryOperationKey(String operation)  {
+    public void pressBinaryOperationKey(String operation) {
         latestValue = Double.parseDouble(screen);
         latestOperation = operation;
     }
@@ -81,6 +81,9 @@ public class Calculator {
             default -> throw new IllegalArgumentException();
         };
         screen = Double.toString(result);
+        if(screen.endsWith(".0")) {
+            screen = screen.substring(0, screen.length() - 2); //1. Fix, entfernt zwei Stellen, wenn das Ergebnis mit ".0" endet.
+        }
         if(screen.equals("NaN")) screen = "Error";
         if(screen.contains(".") && screen.length() > 11) screen = screen.substring(0, 10);
 
